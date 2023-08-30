@@ -1,14 +1,27 @@
 import React from "react";
+import { View, Text, StyleSheet } from "react-native";
 import Calculator from "./components/Calculator";
-import "./App.css";
 
 const App = () => {
   return (
-    <div className="app">
-      <h1>Calculadora Básica</h1>
+    <View style={styles.app}>
+      <Text style={styles.header}>Calculadora Básica</Text>
       <Calculator />
-    </div>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  app: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff",
+  },
+  header: {
+    fontSize: 24,
+    marginBottom: 20,
+  },
+});
 
 export default App;
