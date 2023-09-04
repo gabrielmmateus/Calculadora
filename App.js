@@ -1,12 +1,16 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, StatusBar } from "react-native";
 import Calculator from "./components/Calculator";
 
 const App = () => {
   return (
     <View style={styles.app}>
-      <Text style={styles.header}>Calculadora Básica</Text>
-      <Calculator />
+      {/* Adiciona a StatusBar */}
+      <StatusBar backgroundColor="#222" barStyle="light-content" />
+
+      <View style={styles.calculatorContainer}>
+        <Calculator />
+      </View>
     </View>
   );
 };
@@ -14,13 +18,10 @@ const App = () => {
 const styles = StyleSheet.create({
   app: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
     backgroundColor: "#fff",
   },
-  header: {
-    fontSize: 24,
-    marginBottom: 20,
+  calculatorContainer: {
+    flex: 1,
   },
 });
 
