@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import Button from "./components/Button";
-import Row from "./components/Row";
-import calculator, { initialState } from "./components/Calculator";
+import Button from "./src/components/Button";
+import Row from "./src/components/Row";
+import calculator, { initialState } from "./src/components/Calculator";
 import Icon from "react-native-vector-icons/FontAwesome";
-import Menu from "./components/Menu"; // Importe o componente Menu
+import Menu from "./src/components/Menu"; // Importe o componente Menu
 import { NavigationContainer } from '@react-navigation/native';
 import Navigation from "./src/navigation/Navigation";
 
