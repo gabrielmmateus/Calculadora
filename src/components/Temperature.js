@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Picker } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const Temperature = () => {
+  const navigation = useNavigation(); // Use o hook useNavigation para obter a função de navegação
+
   const [temperatura, setTemperatura] = useState('');
   const [unidadeDeEntrada, setUnidadeDeEntrada] = useState('celsius');
   const [unidadeDeSaida, setUnidadeDeSaida] = useState('celsius');
@@ -63,6 +66,11 @@ const Temperature = () => {
         <Text style={styles.textoBotao}>Converter</Text>
       </TouchableOpacity>
       <Text style={styles.resultado}>Resultado: {resultado}</Text>
+
+      {/* Adicione um botão para voltar ao menu */}
+      <TouchableOpacity style={styles.botao} onPress={() => navigation.goBack()}>
+        <Text style={styles.textoBotao}>Voltar ao Menu</Text>
+      </TouchableOpacity>
     </View>
   );
 };
