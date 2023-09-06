@@ -9,19 +9,19 @@ https://github.com/Rodrigo-Martins-Mateus
 
 # Requisitos Funcionais
 
-# [RF01] Capaz de calcular operações básicas
+#_[RF01] Capaz de calcular operações básicas
 
 
 A Calculadora é capaz de calcular operações de soma, subtração, divisão e multiplicação.
 
 
-# [RF02] Conversor de Temperatura
+#_[RF02] Conversor de Temperatura
 
 
 A Calculadora é capaz de converter temperaturas entre Celsius, Kelvin e Farenheit.
 
 
-# [RF03] Conversor de Medidas
+#_[RF03] Conversor de Medidas
 
 
 A Calculadora é capaz de converter medidas entre Metros, Pés e Polegadas.
