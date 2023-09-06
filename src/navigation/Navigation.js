@@ -1,11 +1,10 @@
-// Navigation.js
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createStackNavigator } from "@react-navigation/stack";
 import Menu from "../components/Menu";
 import Temperature from "../components/Temperature";
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 const Navigation = () => {
   return (
@@ -13,6 +12,7 @@ const Navigation = () => {
       <Stack.Navigator initialRouteName="Menu">
         <Stack.Screen name="Menu" component={Menu} />
         <Stack.Screen name="Temperature" component={Temperature} />
+        <Stack.Screen name="Medida" component={Medida} />
       </Stack.Navigator>
     </NavigationContainer>
   );

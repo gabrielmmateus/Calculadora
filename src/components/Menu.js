@@ -22,7 +22,7 @@ const Menu = ({ isOpen, toggleMenu }) => {
 
       <TouchableOpacity onPress={() => console.log("Conversão de Medida")}>
         <View style={styles.menuItem}>
-          <Icon name="calculator" size={20} top={-5} left={5} color="#fff" />
+          <Icon name="calculator" size={20} top={-10} left={5} color="#fff" />
           <Text style={styles.menuOption}>Calculadora</Text>
         </View>
       </TouchableOpacity>
@@ -30,7 +30,7 @@ const Menu = ({ isOpen, toggleMenu }) => {
 
       <TouchableOpacity onPress={() => navigation.navigate('Temperature')}>
         <View style={styles.menuItem}>
-          <Icon name="thermometer" size={20} top={-5} left={5} color="#fff" />
+          <Icon name="thermometer" size={20} top={-10} left={5} color="#fff" />
           <Text style={styles.menuOption}>Temperatura</Text>
         </View>
       </TouchableOpacity>
@@ -39,17 +39,13 @@ const Menu = ({ isOpen, toggleMenu }) => {
 
       <TouchableOpacity onPress={() => console.log("Conversão de Medida")}>
         <View style={styles.menuItem}>
-          <Icon name="ruler" size={20} top={-5} left={5} color="#fff" />
+          <Icon name="ruler" size={20} top={-10} left={5} color="#fff" />
           <Text style={styles.menuOption}>Medida</Text>
         </View>
       </TouchableOpacity>
       <View style={styles.separator}></View>
     </Animatable.View>
   );
-};
-
-const App = () => {
-  return <Navigation/>;
 };
 
 const styles = StyleSheet.create({
@@ -62,7 +58,7 @@ const styles = StyleSheet.create({
     zIndex: 3,
     padding: 20,
     paddingTop: 50,
-    marginTop: -220
+    marginTop: -210
   },
 
   menuOpen: {
@@ -78,7 +74,7 @@ const styles = StyleSheet.create({
   },
   menuOption: {
     fontSize: 16,
-    marginBottom: 10,
+    marginBottom: 20,
     color: "#fff",
     marginLeft: 10,
   },

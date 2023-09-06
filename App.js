@@ -119,7 +119,7 @@ export default class App extends Component {
               <Button text="." onPress={() => this.HandleTap("number", ".")} />
               <Button
                 text="="
-                theme="primary"
+                theme="accent"
                 onPress={() => this.HandleTap("equal", "=")}
               />
             </Row>
