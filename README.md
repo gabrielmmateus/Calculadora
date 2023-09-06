@@ -9,7 +9,7 @@ https://github.com/Rodrigo-Martins-Mateus
 
 # Requisitos Funcionais
 
-_[RF01] Capaz de calcular operações básicas
+# #**[RF01] Capaz de calcular operações básicas**#
 
 
 A Calculadora é capaz de calcular operações de soma, subtração, divisão e multiplicação.
