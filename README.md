@@ -11,7 +11,6 @@ https://github.com/Rodrigo-Martins-Mateus
 
 [RF01] Capaz de calcular operações básicas
 
-
 A Calculadora é capaz de calcular operações de soma, subtração, divisão e multiplicação.
 
 [RF02] Conversor de Temperatura
