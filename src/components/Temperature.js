@@ -1,170 +1,148 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { SafeAreaView, StyleSheet, Text, View, ScrollView } from "react-native";
-import Button from "./src/components/Button";
-import Row from "./src/components/Row";
+import Button from "./Button";
+import Row from "./Row";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { NavigationContainer } from '@react-navigation/native';
-import Navigation from "./src/navigation/Navigation";
 import { Picker } from "@react-native-picker/picker";
 
-export default class Temperature extends Component {
-  state = {
-    inputValue: "",
-    outputValue: "",
-    fromUnit: "Celsius",
-    toUnit: "Fahrenheit",
-    MenuAberto: false,
-  };
+export default function Temperature() {
+  const [inputValue, setInputValue] = useState("");
+  const [outputValue, setOutputValue] = useState("");
+  const [fromUnit, setFromUnit] = useState("Celsius");
+  const [toUnit, setToUnit] = useState("Fahrenheit");
+  const [menuAberto, setMenuAberto] = useState(false);
 
-  toggleMenu = () => {
-    this.setState((prevState) => ({ MenuAberto: !prevState.MenuAberto }));
-  };
 
-  convertTemperature = () => {
-    const { inputValue, fromUnit, toUnit } = this.state;
 
+  const convertTemperature = () => {
     if (fromUnit === "Celsius" && toUnit === "Fahrenheit") {
       const result = (inputValue * 9/5) + 32;
-      this.setState({ outputValue: result.toFixed(2) + " °F" });
+      setOutputValue(result.toFixed(2) + " °F");
     } else if (fromUnit === "Fahrenheit" && toUnit === "Celsius") {
       const result = (inputValue - 32) * 5/9;
-      this.setState({ outputValue: result.toFixed(2) + " °C" });
+      setOutputValue(result.toFixed(2) + " °C");
     } else if (fromUnit === "Celsius" && toUnit === "Kelvin") {
       const result = parseFloat(inputValue) + 273.15;
-      this.setState({ outputValue: result.toFixed(2) + " K" });
+      setOutputValue(result.toFixed(2) + " K");
     } else if (fromUnit === "Kelvin" && toUnit === "Celsius") {
       const result = parseFloat(inputValue) - 273.15;
-      this.setState({ outputValue: result.toFixed(2) + " °C" });
+      setOutputValue(result.toFixed(2) + " °C");
     } else if (fromUnit === "Fahrenheit" && toUnit === "Kelvin") {
       const result = (inputValue - 32) * 5/9 + 273.15;
-      this.setState({ outputValue: result.toFixed(2) + " K" });
+      setOutputValue(result.toFixed(2) + " K");
     } else if (fromUnit === "Kelvin" && toUnit === "Fahrenheit") {
       const result = (inputValue - 273.15) * 9/5 + 32;
-      this.setState({ outputValue: result.toFixed(2) + " °F" });
+      setOutputValue(result.toFixed(2) + " °F");
     } else if (fromUnit === toUnit) {
-      // Quando as unidades são iguais, exiba a unidade completa junto com o valor
       const unitSymbol = {
         Celsius: "ºC",
         Fahrenheit: "ºF",
         Kelvin: "K",
       }[toUnit];
-      this.setState({ outputValue: inputValue + " " + unitSymbol });
+      setOutputValue(inputValue + " " + unitSymbol);
     } else {
-      this.setState({ outputValue: "Conversão não suportada" });
+      setOutputValue("Conversão não suportada");
     }
   };
 
-  addNumber = (number) => {
-    this.setState({ inputValue: this.state.inputValue + number });
+  const addNumber = (number) => {
+    setInputValue(inputValue + number);
   };
 
-  removeLastCharacter = () => {
-    this.setState({
-      inputValue: this.state.inputValue.slice(0, -1),
-      outputValue: ""
-    });
+  const removeLastCharacter = () => {
+    setInputValue(inputValue.slice(0, -1));
+    setOutputValue("");
   };
 
-  render() {
-    return (
-      <NavigationContainer>
-        <View style={styles.container}>
-          <Icon
-            name="bars"
-            size={30}
-            color="#4D4D4D"
-            style={styles.hamburgerIcon}
-            onPress={this.toggleMenu}
-          />
-          <Text style={styles.value}>{this.state.inputValue}</Text>
-          <SafeAreaView>
-            {this.state.MenuAberto && this.renderMenu()}
+  return (
+    
+      <View style={styles.container}>
+        <Text style={styles.value}>{inputValue}</Text>
+        <SafeAreaView>
+          
 
-            <ScrollView>
-              <Row>
-                <View style={styles.pickerContainer}>
-                  <Text style={styles.pickerLabel}>De: </Text>
-                  <Picker
-                    selectedValue={this.state.fromUnit}
-                    style={{ height: 50, width: 200 }}
-                    onValueChange={(itemValue) =>
-                      this.setState({ fromUnit: itemValue })
-                    }
-                  >
-                    <Picker.Item label="Celsius" value="Celsius" />
-                    <Picker.Item label="Fahrenheit" value="Fahrenheit" />
-                    <Picker.Item label="Kelvin" value="Kelvin" />
-                  </Picker>
-                </View>
-              </Row>
+          <ScrollView>
+            <Row>
+              <View style={styles.pickerContainer}>
+                <Text style={styles.pickerLabel}>De: </Text>
+                <Picker
+                  selectedValue={fromUnit}
+                  style={{ height: 50, width: 200 }}
+                  onValueChange={(itemValue) => setFromUnit(itemValue)}
+                >
+                  <Picker.Item label="Celsius" value="Celsius" />
+                  <Picker.Item label="Fahrenheit" value="Fahrenheit" />
+                  <Picker.Item label="Kelvin" value="Kelvin" />
+                </Picker>
+              </View>
+            </Row>
 
-              <Text style={styles.result}>{this.state.outputValue}</Text>
+            <Text style={styles.result}>{outputValue}</Text>
 
-              <Row>
-                <View style={styles.pickerContainer}>
-                  <Text style={styles.pickerLabel}>Para: </Text>
-                  <Picker
-                    selectedValue={this.state.toUnit}
-                    style={{ height: 50, width: 200 }}
-                    onValueChange={(itemValue) =>
-                      this.setState({ toUnit: itemValue })
-                    }
-                  >
-                    <Picker.Item label="Celsius" value="Celsius" />
-                    <Picker.Item label="Fahrenheit" value="Fahrenheit" />
-                    <Picker.Item label="Kelvin" value="Kelvin" />
-                  </Picker>
-                </View>
-              </Row>
+            <Row>
+              <View style={styles.pickerContainer}>
+                <Text style={styles.pickerLabel}>Para: </Text>
+                <Picker
+                  selectedValue={toUnit}
+                  style={{ height: 50, width: 200 }}
+                  onValueChange={(itemValue) => setToUnit(itemValue)}
+                >
+                  <Picker.Item label="Celsius" value="Celsius" />
+                  <Picker.Item label="Fahrenheit" value="Fahrenheit" />
+                  <Picker.Item label="Kelvin" value="Kelvin" />
+                </Picker>
+              </View>
+            </Row>
 
-              <Row>
-                <Button
-                  text="AC"
-                  theme="secondary"
-                  onPress={() =>
-                    this.setState({ inputValue: "", outputValue: "" })
-                  }
-                />
-                <Button
-                  text="←"
-                  theme="secondary"
-                  onPress={this.removeLastCharacter}
-                />
-              </Row>
+            <Row>
+              <Button
+                text="AC"
+                theme="secondary"
+                onPress={() => {
+                  setInputValue("");
+                  setOutputValue("");
+                }}
+              />
+              <Button
+                text="←"
+                theme="secondary"
+                onPress={removeLastCharacter}
+              />
+            </Row>
 
-              <Row>
-                <Button text="7" onPress={() => this.addNumber("7")} />
-                <Button text="8" onPress={() => this.addNumber("8")} />
-                <Button text="9" onPress={() => this.addNumber("9")} />
-              </Row>
+            <Row>
+              <Button text="7" onPress={() => addNumber("7")} />
+              <Button text="8" onPress={() => addNumber("8")} />
+              <Button text="9" onPress={() => addNumber("9")} />
+            </Row>
 
-              <Row>
-                <Button text="4" onPress={() => this.addNumber("4")} />
-                <Button text="5" onPress={() => this.addNumber("5")} />
-                <Button text="6" onPress={() => this.addNumber("6")} />
-              </Row>
+            <Row>
+              <Button text="4" onPress={() => addNumber("4")} />
+              <Button text="5" onPress={() => addNumber("5")} />
+              <Button text="6" onPress={() => addNumber("6")} />
+            </Row>
 
-              <Row>
-                <Button text="1" onPress={() => this.addNumber("1")} />
-                <Button text="2" onPress={() => this.addNumber("2")} />
-                <Button text="3" onPress={() => this.addNumber("3")} />
-              </Row>
+            <Row>
+              <Button text="1" onPress={() => addNumber("1")} />
+              <Button text="2" onPress={() => addNumber("2")} />
+              <Button text="3" onPress={() => addNumber("3")} />
+            </Row>
 
-              <Row>
-                <Button text="0" onPress={() => this.addNumber("0")} />
-                <Button text="." onPress={() => this.addNumber(".")} />
-                <Button
-                  text="="
-                  theme="secondary"
-                  onPress={this.convertTemperature}
-                />
-              </Row>
-            </ScrollView>
-          </SafeAreaView>
-        </View>
-      </NavigationContainer>
-    );
-  }
+            <Row>
+              <Button text="0" onPress={() => addNumber("0")} />
+              <Button text="." onPress={() => addNumber(".")} />
+              <Button
+                text="="
+                theme="secondary"
+                onPress={convertTemperature}
+              />
+            </Row>
+          </ScrollView>
+        </SafeAreaView>
+      </View>
+    
+  );
 }
 
 const styles = StyleSheet.create({

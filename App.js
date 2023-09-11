@@ -1,136 +1,134 @@
-import React, { Component } from "react";
-import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import React, { useState, useCallback } from "react";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import Button from "./src/components/Button";
 import Row from "./src/components/Row";
 import calculator, { initialState } from "./src/components/Calculator";
 import Icon from "react-native-vector-icons/FontAwesome";
-import Menu from "./src/components/Menu"; // Importe o componente Menu
+import Menu from "./src/components/Menu";
 import { NavigationContainer } from '@react-navigation/native';
-import Navigation from "./src/navigation/Navigation";
+import { createStackNavigator } from "@react-navigation/stack";
+import Temperature from "./src/components/Temperature";
+import Medida from "./src/components/Medida";
 
+const Stack = createStackNavigator();
 
-
-export default class App extends Component {
-  state = {
+export default function App() {
+  const [state, setState] = useState({
     ...initialState,
-    MenuAberto: false, // Adicione um estado para controlar a abertura do menu
-  };
+    MenuAberto: false,
+  });
 
-  // handle tap method
-  HandleTap = (type, value) => {
-    this.setState((state) => calculator(type, value, state));
-  };
+  const HandleTap = useCallback((type, value) => {
+    setState((prevState) => calculator(type, value, prevState));
+  }, []);
 
-  // Método para alternar a abertura/fechamento do menu
-  toggleMenu = () => {
-    this.setState((prevState) => ({ MenuAberto: !prevState.MenuAberto }));
-  };
+  const toggleMenu = useCallback(() => {
+    setState((prevState) => ({ ...prevState, MenuAberto: !prevState.MenuAberto }));
+  }, []);
 
-  // Renderizar o menu vertical
-  renderMenu() {
-    return (
-      <Menu isOpen={this.state.MenuAberto} toggleMenu={this.toggleMenu} />
-    );
-  }
+  const renderMenu = useCallback(() => {
+    return <Menu isOpen={state.MenuAberto} toggleMenu={toggleMenu} />;
+  }, [state.MenuAberto, toggleMenu]);
 
-  // render method
-  render() {
-    return (
-      <NavigationContainer>
-        <View style={styles.container}>
-          <Icon
-            name="bars"
-            size={30}
-            color="#4D4D4D"
-            style={styles.hamburgerIcon}
-            onPress={this.toggleMenu} // Adicione isso para abrir/fechar o menu ao tocar no ícone
-          />
-          <SafeAreaView>
-            {/* Renderize o menu condicionalmente */}
-            {this.state.MenuAberto && this.renderMenu()}
-
-            <Text style={styles.value}>
-              {parseFloat(this.state.currentValue).toLocaleString()}
-            </Text>
-
-            {/* Do create componentRow */}
-            <Row>
-              <Button
-                text="AC"
-                theme="secondary"
-                onPress={() => this.HandleTap("clear")}
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Calculator">
+        <Stack.Screen name="Calculator">
+          {() => (
+            <View style={styles.container}>
+              <Icon
+                name="bars"
+                size={30}
+                color="#4D4D4D"
+                style={styles.hamburgerIcon}
+                onPress={toggleMenu}
               />
+              <SafeAreaView>
+                {state.MenuAberto && renderMenu()}
 
-              <Button
-                text="+/-"
-                theme="secondary"
-                onPress={() => this.HandleTap("posneg")}
-              />
+                <Text style={styles.value}>
+                  {parseFloat(state.currentValue).toLocaleString()}
+                </Text>
 
-              <Button
-                text="%"
-                theme="secondary"
-                onPress={() => this.HandleTap("percentage")}
-              />
+                <Row>
+                  <Button
+                    text="AC"
+                    theme="secondary"
+                    onPress={() => HandleTap("clear")}
+                  />
 
-              <Button
-                text="/"
-                theme="accent"
-                onPress={() => this.HandleTap("operator", "/")}
-              />
-            </Row>
+                  <Button
+                    text="+/-"
+                    theme="secondary"
+                    onPress={() => HandleTap("posneg")}
+                  />
 
-            {/* Number */}
-            <Row>
-              <Button text="7" onPress={() => this.HandleTap("number", 7)} />
-              <Button text="8" onPress={() => this.HandleTap("number", 8)} />
-              <Button text="9" onPress={() => this.HandleTap("number", 9)} />
-              <Button
-                text="X"
-                theme="accent"
-                onPress={() => this.HandleTap("operator", "*")}
-              />
-            </Row>
+                  <Button
+                    text="%"
+                    theme="secondary"
+                    onPress={() => HandleTap("percentage")}
+                  />
 
-            <Row>
-              <Button text="4" onPress={() => this.HandleTap("number", 4)} />
-              <Button text="5" onPress={() => this.HandleTap("number", 5)} />
-              <Button text="6" onPress={() => this.HandleTap("number", 6)} />
-              <Button
-                text="-"
-                theme="accent"
-                onPress={() => this.HandleTap("operator", "-")}
-              />
-            </Row>
+                  <Button
+                    text="/"
+                    theme="accent"
+                    onPress={() => HandleTap("operator", "/")}
+                  />
+                </Row>
 
-            <Row>
-              <Button text="1" onPress={() => this.HandleTap("number", 1)} />
-              <Button text="2" onPress={() => this.HandleTap("number", 2)} />
-              <Button text="3" onPress={() => this.HandleTap("number", 3)} />
-              <Button
-                text="+"
-                theme="accent"
-                onPress={() => this.HandleTap("operator", "+")}
-              />
-            </Row>
+                <Row>
+                  <Button text="7" onPress={() => HandleTap("number", 7)} />
+                  <Button text="8" onPress={() => HandleTap("number", 8)} />
+                  <Button text="9" onPress={() => HandleTap("number", 9)} />
+                  <Button
+                    text="X"
+                    theme="accent"
+                    onPress={() => HandleTap("operator", "*")}
+                  />
+                </Row>
 
-            <Row>
-              <Button text="0" onPress={() => this.HandleTap("number", 0)} />
-              <Button text="." onPress={() => this.HandleTap("number", ".")} />
-              <Button
-                text="="
-                theme="accent"
-                onPress={() => this.HandleTap("equal", "=")}
-              />
-            </Row>
-          </SafeAreaView>
-        </View>
-      </NavigationContainer>
-    );
-  }
+                <Row>
+                  <Button text="4" onPress={() => HandleTap("number", 4)} />
+                  <Button text="5" onPress={() => HandleTap("number", 5)} />
+                  <Button text="6" onPress={() => HandleTap("number", 6)} />
+                  <Button
+                    text="-"
+                    theme="accent"
+                    onPress={() => HandleTap("operator", "-")}
+                  />
+                </Row>
+
+                <Row>
+                  <Button text="1" onPress={() => HandleTap("number", 1)} />
+                  <Button text="2" onPress={() => HandleTap("number", 2)} />
+                  <Button text="3" onPress={() => HandleTap("number", 3)} />
+                  <Button
+                    text="+"
+                    theme="accent"
+                    onPress={() => HandleTap("operator", "+")}
+                  />
+                </Row>
+
+                <Row>
+                  <Button text="0" onPress={() => HandleTap("number", 0)} />
+                  <Button text="." onPress={() => HandleTap("number", ".")} />
+                  <Button
+                    text="="
+                    theme="accent"
+                    onPress={() => HandleTap("equal", "=")}
+                  />
+                </Row>
+              </SafeAreaView>
+            </View>
+          )}
+        </Stack.Screen>
+        <Stack.Screen name="Temperature" component={Temperature} />
+        <Stack.Screen name="Medida" component={Medida} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 }
 
-// create styles of app
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -146,9 +144,8 @@ const styles = StyleSheet.create({
   },
   hamburgerIcon: {
     position: "absolute",
-    top: 50,
-    width: 100,
-    left: 10,
+    top: 0,
+    right: 10, 
     zIndex: 1,
   },
 });

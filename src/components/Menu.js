@@ -20,14 +20,6 @@ const Menu = ({ isOpen, toggleMenu }) => {
       </TouchableOpacity>
       <Text style={styles.menuTitle}>Conversores</Text>
 
-      <TouchableOpacity onPress={() => console.log("Conversão de Medida")}>
-        <View style={styles.menuItem}>
-          <Icon name="calculator" size={20} top={-10} left={5} color="#fff" />
-          <Text style={styles.menuOption}>Calculadora</Text>
-        </View>
-      </TouchableOpacity>
-      <View style={styles.separator}></View>
-
       <TouchableOpacity onPress={() => navigation.navigate('Temperature')}>
         <View style={styles.menuItem}>
           <Icon name="thermometer" size={20} top={-10} left={5} color="#fff" />
@@ -37,7 +29,7 @@ const Menu = ({ isOpen, toggleMenu }) => {
 
       <View style={styles.separator}></View>
 
-      <TouchableOpacity onPress={() => console.log("Conversão de Medida")}>
+      <TouchableOpacity onPress={() => navigation.navigate('Medida')}>
         <View style={styles.menuItem}>
           <Icon name="ruler" size={20} top={-10} left={5} color="#fff" />
           <Text style={styles.menuOption}>Medida</Text>
@@ -71,6 +63,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     color: "#fff",
     paddingBottom: 50,
+    marginTop:20,
   },
   menuOption: {
     fontSize: 16,
