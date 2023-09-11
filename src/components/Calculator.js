@@ -5,14 +5,22 @@ export const initialState = {
 };
 
 export const handleNumber = (value, state) => {
-  if (state.currentValue === "0") {
-    return { currentValue: `${value}` };
+  if (state.currentValue === "0" || state.operator) {
+    return {
+      currentValue: `${value}`,
+    };
+  }
+
+  if (value === "." && state.currentValue.includes(".")) {
+    // Don't add another decimal point if one already exists
+    return state;
   }
 
   return {
     currentValue: `${state.currentValue}${value}`,
   };
 };
+
 
 const handleEqual = (state) => {
   const { currentValue, previousValue, operator } = state;
@@ -52,7 +60,10 @@ const handleEqual = (state) => {
 const calculator = (type, value, state) => {
   switch (type) {
     case "number":
-      return handleNumber(value, state);
+      return {
+        ...state,
+        ...handleNumber(value, state),
+      };
     case "clear":
       return initialState;
     case "posneg":
